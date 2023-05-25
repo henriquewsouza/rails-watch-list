@@ -6,6 +6,8 @@ class ListsController < ApplicationController
   end
 
   def show
+    @list = List.find(params[:id])
+    @movies = @list.movies
   end
 
   def new
@@ -15,9 +17,9 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     if @list.save
-      redirect_to @list
+      redirect_to list_path(@list)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -30,6 +32,7 @@ class ListsController < ApplicationController
 
   def set_list
     @list = List.find(params[:id])
+    @movies = Movie.all
   end
 
   def list_params

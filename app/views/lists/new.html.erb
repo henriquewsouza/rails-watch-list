@@ -1,0 +1,9 @@
+<div class="container mt-2 mb-5">
+  <h1 class="mb-5">New list</h1>
+
+  <%= render "form", list: @list %>
+
+  <div>
+    <%= link_to "Back to lists", lists_path, class: "btn btn-primary mt-3" %>
+  </div>
+</div>
