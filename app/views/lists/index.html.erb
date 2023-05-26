@@ -1,15 +1,23 @@
 
+
 <div class="container mt-2 mb-5">
 
 
-  <h1 class="mb-5">Lists</h1>
+  <h1 class="mb-5">Movies Lists</h1>
 
   <div id="lists" class="row">
     <% @lists.each do |list| %>
       <div class="col-md-4 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><%= list.name %></h5>
+            <h4 class="card-title"><%= list.name %></h4>
+              <p>
+                <% list.bookmarks.each_with_index do |b, index| %>
+                  <ul><%= "#{index + 1}. #{Movie.find(b.movie_id).title} #{Movie.find(b.movie_id).rating}" %>
+                    <i class="fa-sharp fa-solid fa-star fa-beat ml-2"></i>
+                  </ul>
+                <% end %>
+              </p>
             <%= link_to "See details", list_path(list), class: "btn btn-primary"%>
           </div>
         </div>

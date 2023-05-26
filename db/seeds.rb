@@ -5,11 +5,15 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-50.times do
-  Movie.create(
-    title: Faker::Movie.title,
-    overview: Faker::Lorem.paragraph(sentence_count: 10),
-    poster_url: Faker::Placeholdit.image(size: "50x50"),
-    rating: Faker::Number.between(from: 0.0, to: 10.0)
-  )
+require "json"
+require "open-uri"
+
+url = "https://tmdb.lewagon.com/movie/top_rated"
+movies_serialized = URI.open(url).read
+movies = JSON.parse(movies_serialized)
+
+movies_array = movies["results"]
+
+movies_array.each do |movie|
+  Movie.create(title: movie["title"], overview: movie["overview"], poster_url: "https://image.tmdb.org/t/p/w500#{movie["poster_path"]}", rating: movie["vote_average"])
 end
